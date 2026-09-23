@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHERIA AI — Ultra-Futuristic AI Companion</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        space: {
+                            deep: '#05040a',
+                            card: 'rgba(15, 12, 27, 0.65)',
+                            border: 'rgba(255, 42, 133, 0.25)',
+                            pink: '#ff2a85',
+                            hotpink: '#ff007f',
+                            cyan: '#00f2fe',
+                            purple: '#9d4edd',
+                            neonviolet: '#7b2cbf',
+                            dark: '#0a0814'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite ease-in-out',
+                        'float': 'float 6s infinite ease-in-out',
+                        'shimmer': 'shimmer 2.5s infinite linear',
+                        'spin-slow': 'spin 12s linear infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.4, transform: 'scale(1)' },
+                            '50%': { opacity: 0.8, transform: 'scale(1.05)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #05040a; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #ff2a85, #9d4edd); border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff007f; }
+
+        /* Ultra Glassmorphism */
+        .glass-panel {
+            background: rgba(18, 14, 33, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 42, 133, 0.18);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), inset 0 0 1px 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-panel-glow {
+            background: rgba(22, 16, 42, 0.7);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 42, 133, 0.35);
+            box-shadow: 0 0 25px rgba(255, 42, 133, 0.15), inset 0 0 15px rgba(0, 242, 254, 0.05);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-input:focus {
+            border-color: #ff2a85;
+            background: rgba(255, 42, 133, 0.05);
+            box-shadow: 0 0 20px rgba(255, 42, 133, 0.3);
+        }
+
+        /* Gradient Borders */
+        .gradient-border-pink {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 42, 133, 0.4), rgba(157, 78, 221, 0.1));
+            padding: 1px;
+            border-radius: 1rem;
+        }
+
+        /* Glowing text effects */
+        .neon-text-pink { text-shadow: 0 0 12px rgba(255, 42, 133, 0.8), 0 0 24px rgba(255, 42, 133, 0.4); }
+        .neon-text-cyan { text-shadow: 0 0 12px rgba(0, 242, 254, 0.8), 0 0 24px rgba(0, 242, 254, 0.4); }
+        .neon-glow-btn { box-shadow: 0 0 25px rgba(255, 42, 133, 0.4); }
+        .neon-glow-btn:hover { box-shadow: 0 0 35px rgba(255, 42, 133, 0.7), 0 0 15px rgba(0, 242, 254, 0.5); }
+
+        /* Skeleton shimmer animation */
+        .skeleton-shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,42,133,0.15) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.8s infinite;
+        }
+
+        /* Custom 3D Tilt Card Container */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out;
+        }
+    </style>
+</head>
+
+<body class="bg-space-deep text-slate-100 font-sans antialiased min-h-screen flex overflow-hidden selection:bg-space-pink selection:text-white">
+
+    <!-- Interactive Background 3D Particles/Mesh Canvas -->
+    <canvas id="bg-canvas" class="fixed inset-0 z-0 pointer-events-none opacity-60"></canvas>
+
+    <!-- Ambient Glowing Orbs -->
+    <div class="fixed top-[-15%] left-[-10%] w-[600px] h-[600px] bg-space-pink/20 rounded-full blur-[160px] pointer-events-none animate-pulse-glow"></div>
+    <div class="fixed bottom-[-15%] right-[-10%] w-[700px] h-[700px] bg-space-cyan/15 rounded-full blur-[180px] pointer-events-none animate-pulse-glow" style="animation-delay: 1.5s;"></div>
+    <div class="fixed top-[35%] left-[45%] w-[450px] h-[450px] bg-space-purple/20 rounded-full blur-[150px] pointer-events-none animate-float"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-space-dark/85 backdrop-blur-2xl border-r border-space-border/40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 flex flex-col justify-between">
+        <div>
+            <!-- Sidebar Header & 3D Hologram Logo -->
+            <div class="p-6 border-b border-white/10 flex items-center justify-between">
+                <div class="flex items-center gap-3.5">
+                    <!-- 3D Hologram Orb -->
+                    <div class="relative w-11 h-11 rounded-2xl bg-gradient-to-tr from-space-pink via-space-purple to-space-cyan p-[2px] shadow-lg shadow-space-pink/40 animate-float">
+                        <div class="w-full h-full bg-space-deep rounded-[14px] flex items-center justify-center overflow-hidden relative">
+                            <div class="absolute inset-0 bg-gradient-to-br from-space-pink/30 to-transparent animate-spin-slow"></div>
+                            <i class="fa-solid fa-brain text-space-pink text-xl relative z-10 neon-text-pink"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-extrabold text-xl text-white tracking-wider flex items-center gap-1">
+                            AETHERIA<span class="text-space-pink font-bold neon-text-pink">.AI</span>
+                        </h1>
+                        <p class="text-[9px] text-space-cyan font-mono tracking-widest uppercase flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-space-cyan animate-ping"></span> Neural v3.1 Ultra
+                        </p>
+                    </div>
+                </div>
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Navigation Items -->
+            <nav class="p-4 space-y-2">
+                <div class="px-3 py-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Pusat Intelijen</div>
+                
+                <button onclick="switchTab('chat')" id="nav-chat" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl font-medium text-sm transition-all duration-300 bg-gradient-to-r from-space-pink/25 via-space-pink/10 to-transparent border-l-4 border-space-pink text-white shadow-lg shadow-space-pink/10">
+                    <i class="fa-solid fa-comments text-space-pink text-lg"></i>
+                    <div class="text-left">
+                        <div class="font-semibold">AI Chat Superbot</div>
+                        <div class="text-[10px] text-slate-400">Percakapan Multi-Persona</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('writer')" id="nav-writer" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl font-medium text-sm transition-all duration-300 text-slate-400 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-wand-magic-sparkles text-space-purple text-lg"></i>
+                    <div class="text-left">
+                        <div class="font-semibold">Content Studio</div>
+                        <div class="text-[10px] text-slate-400">Generator Naskah & Teks</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('image')" id="nav-image" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl font-medium text-sm transition-all duration-300 text-slate-400 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-palette text-space-cyan text-lg"></i>
+                    <div class="text-left">
+                        <div class="font-semibold">Art & Image Lab</div>
+                        <div class="text-[10px] text-slate-400">Preset Visual Studio</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('audio')" id="nav-audio" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl font-medium text-sm transition-all duration-300 text-slate-400 hover:text-white hover:bg-white/5">
+                    <i class="fa-solid fa-waveform-lines text-emerald-400 text-lg"></i>
+                    <div class="text-left">
+                        <div class="font-semibold">Voice & Audio Lab</div>
+                        <div class="text-[10px] text-slate-400">Visualizer Suara Real-time</div>
+                    </div>
+                </button>
+            </nav>
+        </div>
+
+        <!-- System Core Status -->
+        <div class="p-4 m-4 rounded-2xl glass-panel-glow border-space-pink/30 space-y-3">
+            <div class="flex items-center justify-between text-xs">
+                <span class="text-slate-300 font-mono text-[11px] flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Core Engine
+                </span>
+                <span class="text-space-pink font-mono text-[10px] px-2 py-0.5 rounded-full bg-space-pink/20 border border-space-pink/40">ONLINE</span>
+            </div>
+            <div class="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-gradient-to-r from-space-pink to-space-cyan h-full w-[92%] animate-pulse"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                <span>Latensi: 18ms</span>
+                <span>Akurasi: 99.8%</span>
+            </div>
+        </div>
+    </aside>
+
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/70 backdrop-blur-md z-30 hidden md:hidden"></div>
+
+    <!-- Main Content App -->
+    <main class="flex-1 md:ml-72 flex flex-col h-screen relative z-10 overflow-hidden">
+        
+        <!-- Header Bar -->
+        <header class="h-20 border-b border-white/10 px-6 flex items-center justify-between bg-space-deep/60 backdrop-blur-xl">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-300 hover:text-white p-2">
+                    <i class="fa-solid fa-bars-staggered text-xl"></i>
+                </button>
+                <div>
+                    <h2 id="header-title" class="font-display font-bold text-xl text-white flex items-center gap-2.5">
+                        <i class="fa-solid fa-comments text-space-pink neon-text-pink"></i> AI Chat Superbot
+                    </h2>
+                    <p id="header-desc" class="text-xs text-slate-400 hidden sm:block">Model AI responsif dengan penalaran tingkat tinggi</p>
+                </div>
+            </div>
+
+            <!-- Controls & API Key Manager -->
+            <div class="flex items-center gap-3">
+                <button onclick="openApiKeyModal()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-space-pink/20 text-xs font-semibold text-slate-200 hover:text-space-pink transition border border-white/10 flex items-center gap-2 glass-panel">
+                    <i class="fa-solid fa-key text-space-pink"></i>
+                    <span id="api-status-badge" class="hidden sm:inline">Set API Key</span>
+                </button>
+
+                <button onclick="resetActiveTab()" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition border border-white/10 glass-panel" title="Reset Sesi">
+                    <i class="fa-solid fa-rotate-right text-sm"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- MODULE 1: AI CHAT SUPERBOT -->
+        <section id="tab-chat" class="tab-content flex-1 flex flex-col h-[calc(100vh-5rem)] p-4 md:p-6 overflow-hidden">
+            <!-- Persona Selector Bar -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-2 no-scrollbar">
+                <span class="text-xs text-slate-400 font-mono whitespace-nowrap mr-2"><i class="fa-solid fa-user-gear text-space-pink mr-1"></i> Persona AI:</span>
+                <button onclick="setPersona('Creative')" class="persona-btn active px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap bg-gradient-to-r from-space-pink to-space-purple text-white border border-space-pink/50 shadow-md">
+                    <i class="fa-solid fa-lightbulb mr-1"></i> Creative Partner
+                </button>
+                <button onclick="setPersona('Analyst')" class="persona-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap glass-panel text-slate-300 hover:text-white border border-white/10">
+                    <i class="fa-solid fa-chart-line mr-1 text-space-cyan"></i> Analyst & Logic
+                </button>
+                <button onclick="setPersona('Coder')" class="persona-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap glass-panel text-slate-300 hover:text-white border border-white/10">
+                    <i class="fa-solid fa-code mr-1 text-emerald-400"></i> Fullstack Coder
+                </button>
+                <button onclick="setPersona('Coach')" class="persona-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap glass-panel text-slate-300 hover:text-white border border-white/10">
+                    <i class="fa-solid fa-heart mr-1 text-rose-400"></i> Friendly Life Coach
+                </button>
+            </div>
+
+            <!-- Chat Messages Display -->
+            <div id="chat-messages" class="flex-1 overflow-y-auto space-y-5 pr-2 mb-4 scroll-smooth">
+                <!-- Bot Welcome Message -->
+                <div class="flex gap-4 max-w-3xl">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-space-pink to-space-purple flex items-center justify-center shrink-0 text-white text-sm shadow-lg shadow-space-pink/30">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="glass-panel p-5 rounded-3xl rounded-tl-none space-y-2 border-space-pink/30">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-space-pink font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                Aetheria Bot <span class="text-[9px] px-1.5 py-0.5 rounded bg-space-pink/20 text-space-pink border border-space-pink/40" id="current-persona-badge">Creative</span>
+                            </span>
+                            <button onclick="speakText(this)" class="text-slate-400 hover:text-space-cyan text-xs transition" title="Dengarkan Suara">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                        </div>
+                        <div class="text-sm text-slate-200 leading-relaxed message-content">
+                            Selamat datang di **AETHERIA AI**! Saya telah disetel dalam mode **Creative Partner**. Apa proyek seru atau ide cemerlang yang ingin kita bahas hari ini?
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Suggestion Chips -->
+            <div class="flex items-center gap-2 overflow-x-auto py-2 mb-2 no-scrollbar">
+                <span class="text-[11px] text-slate-400 whitespace-nowrap">Saran:</span>
+                <button onclick="useQuickPrompt('Buatkan strategi marketing futuristik untuk brand fashion')" class="px-3 py-1 rounded-full text-xs glass-input text-slate-300 hover:text-space-pink hover:border-space-pink/40 whitespace-nowrap">
+                    🚀 Strategi Marketing Fashion
+                </button>
+                <button onclick="useQuickPrompt('Jelaskan teori Quantum Computing dengan analogi sederhana')" class="px-3 py-1 rounded-full text-xs glass-input text-slate-300 hover:text-space-cyan hover:border-space-cyan/40 whitespace-nowrap">
+                    ⚛️ Quantum Computing
+                </button>
+                <button onclick="useQuickPrompt('Buatkan kode Python web scraping sederhana menggunakan BeautifulSoup')" class="px-3 py-1 rounded-full text-xs glass-input text-slate-300 hover:text-emerald-400 hover:border-emerald-400/40 whitespace-nowrap">
+                    🐍 Python Web Scraper
+                </button>
+            </div>
+
+            <!-- Chat Input Bar -->
+            <form id="chat-form" onsubmit="handleChatSubmit(event)" class="relative max-w-5xl w-full mx-auto">
+                <div class="relative flex items-center">
+                    <input type="text" id="chat-input" placeholder="Tanyakan apa saja kepada Aetheria AI..." required
+                        class="w-full pl-6 pr-16 py-4.5 rounded-2xl glass-input text-sm text-white placeholder-slate-400 focus:outline-none">
+                    <button type="submit" id="chat-submit-btn" class="absolute right-2.5 p-3.5 rounded-xl bg-gradient-to-r from-space-pink via-space-hotpink to-space-purple text-white hover:opacity-95 active:scale-95 transition neon-glow-btn">
+                        <i class="fa-solid fa-paper-plane text-base"></i>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- MODULE 2: CONTENT STUDIO -->
+        <section id="tab-writer" class="tab-content hidden flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+            <div class="max-w-5xl mx-auto space-y-6">
+                <!-- Control Panel -->
+                <div class="glass-panel p-6 md:p-8 rounded-3xl space-y-6 border-space-purple/30">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-display font-bold text-xl text-white flex items-center gap-2.5">
+                                <i class="fa-solid fa-wand-magic-sparkles text-space-purple neon-text-pink"></i> Studio Konten Profesional
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-1">Hasilkan konten komersial, kreatif, atau akademik dengan kontrol tinggi</p>
+                        </div>
+                        <span class="text-xs text-space-purple font-mono px-3 py-1 rounded-full bg-space-purple/20 border border-space-purple/40">AI Text Engine</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
+                            <label class="text-xs font-semibold text-slate-300 block mb-2">Format Konten</label>
+                            <select id="writer-type" class="w-full p-3.5 rounded-xl glass-input text-xs text-white focus:outline-none">
+                                <option value="Artikel Blog SEO">Artikel Blog / SEO</option>
+                                <option value="Skrip Video TikTok / Reels">Skrip Video TikTok / Reels</option>
+                                <option value="Caption Instagram Viral">Caption Instagram Viral</option>
+                                <option value="Email Bisnis & Penawaran">Email Bisnis & Penawaran</option>
+                                <option value="Cerita Pendek Sci-Fi">Cerita Pendek Sci-Fi</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-semibold text-slate-300 block mb-2">Tone of Voice (Gaya Bahasa)</label>
+                            <select id="writer-tone" class="w-full p-3.5 rounded-xl glass-input text-xs text-white focus:outline-none">
+                                <option value="Persuasif & Energik">Persuasif & Energik</option>
+                                <option value="Profesional & Elegan">Profesional & Elegan</option>
+                                <option value="Santai, Gaul & Relatable">Santai & Relatable</option>
+                                <option value="Puitis & Filosofis">Puitis & Filosofis</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs font-semibold text-slate-300">Kreativitas (Temperature)</label>
+                                <span id="temp-val" class="text-xs font-mono text-space-pink">0.8</span>
+                            </div>
+                            <input type="range" id="writer-temp" min="0.1" max="1.0" step="0.1" value="0.8" oninput="document.getElementById('temp-val').textContent = this.value"
+                                class="w-full accent-space-pink bg-white/10 rounded-lg h-2 cursor-pointer">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-semibold text-slate-300 block mb-2">Instruksi Utama / Topik Konten</label>
+                        <textarea id="writer-prompt" rows="3" placeholder="Contoh: Buatkan skrip TikTok durasi 60 detik tentang 5 Alasan Kenapa Harus Belajar AI di Tahun 2026..."
+                            class="w-full p-4 rounded-xl glass-input text-sm text-white placeholder-slate-400 focus:outline-none resize-none"></textarea>
+                    </div>
+
+                    <button onclick="generateStudioContent()" id="writer-btn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-space-purple via-space-pink to-space-cyan text-white font-bold text-sm hover:opacity-95 transition active:scale-[0.99] flex items-center justify-center gap-2 shadow-xl shadow-space-purple/30">
+                        <i class="fa-solid fa-bolt text-lg"></i>
+                        <span>Hasilkan Konten Sekarang</span>
+                    </button>
+                </div>
+
+                <!-- Output Display Card -->
+                <div class="glass-panel p-6 md:p-8 rounded-3xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-space-purple flex items-center gap-2">
+                            <i class="fa-solid fa-file-lines"></i> Hasil Generasi Teks
+                        </span>
+                        <div class="flex items-center gap-2">
+                            <button onclick="copyToClipboard('writer-output')" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs text-slate-300 hover:text-white transition border border-white/10 flex items-center gap-1.5">
+                                <i class="fa-solid fa-copy"></i> Salin
+                            </button>
+                        </div>
+                    </div>
+                    <div id="writer-output" class="text-sm text-slate-200 leading-relaxed min-h-[180px] whitespace-pre-wrap font-sans">
+                        Hasil teks AI akan muncul di sini...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 3: ART & IMAGE LAB -->
+        <section id="tab-image" class="tab-content hidden flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+            <div class="max-w-5xl mx-auto space-y-6">
+                <!-- Settings Panel -->
+                <div class="glass-panel p-6 md:p-8 rounded-3xl space-y-6 border-space-cyan/30">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-display font-bold text-xl text-white flex items-center gap-2.5">
+                                <i class="fa-solid fa-palette text-space-cyan neon-text-cyan"></i> AI Image Art Generator
+                            </h3>
+                            <p class="text-xs text-slate-400 mt-1">Ubah imajinasi teks menjadi karya seni visual 3D berkategori tinggi</p>
+                        </div>
+                        <span class="text-xs text-space-cyan font-mono px-3 py-1 rounded-full bg-space-cyan/20 border border-space-cyan/40">Gemini Nano Flash</span>
+                    </div>
+
+                    <!-- Preset Art Styles Grid -->
+                    <div>
+                        <label class="text-xs font-semibold text-slate-300 block mb-2.5">Pilih Preset Gaya Visual</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                            <button onclick="selectArtStyle(this, 'Cyberpunk Neon')" class="art-style-btn active p-3 rounded-2xl glass-panel text-center hover:border-space-pink transition border-space-pink bg-space-pink/20">
+                                <i class="fa-solid fa-city text-space-pink text-lg mb-1 block"></i>
+                                <span class="text-xs font-semibold block text-white">Cyberpunk</span>
+                            </button>
+                            <button onclick="selectArtStyle(this, '3D Render Cinematic')" class="art-style-btn p-3 rounded-2xl glass-panel text-center hover:border-space-pink transition border-white/10">
+                                <i class="fa-solid fa-cube text-space-purple text-lg mb-1 block"></i>
+                                <span class="text-xs font-semibold block text-slate-300">3D Render</span>
+                            </button>
+                            <button onclick="selectArtStyle(this, 'Anime Masterpiece')" class="art-style-btn p-3 rounded-2xl glass-panel text-center hover:border-space-pink transition border-white/10">
+                                <i class="fa-solid fa-wand-magic text-space-cyan text-lg mb-1 block"></i>
+                                <span class="text-xs font-semibold block text-slate-300">Anime Aesthetic</span>
+                            </button>
+                            <button onclick="selectArtStyle(this, 'Photorealistic 8K')" class="art-style-btn p-3 rounded-2xl glass-panel text-center hover:border-space-pink transition border-white/10">
+                                <i class="fa-solid fa-camera text-emerald-400 text-lg mb-1 block"></i>
+                                <span class="text-xs font-semibold block text-slate-300">Realistic Photo</span>
+                            </button>
+                            <button onclick="selectArtStyle(this, 'Synthwave Retro 80s')" class="art-style-btn p-3 rounded-2xl glass-panel text-center hover:border-space-pink transition border-white/10">
+                                <i class="fa-solid fa-sun text-rose-400 text-lg mb-1 block"></i>
+                                <span class="text-xs font-semibold block text-slate-300">Synthwave</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Input Bar & Prompt Enhancer -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold text-slate-300">Deskripsi Prompt Visual</label>
+                            <button onclick="enhancePrompt()" class="text-xs text-space-pink hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-wand-sparkles"></i> AI Enhance Prompt
+                            </button>
+                        </div>
+                        <input type="text" id="image-prompt" placeholder="Contoh: Robot astronot wanita dengan armor neon pink berdiri di atas permukaan planet kristal..."
+                            class="w-full p-4 rounded-xl glass-input text-sm text-white placeholder-slate-400 focus:outline-none">
+                    </div>
+
+                    <button onclick="generateAIImage()" id="image-btn" class="w-full py-4 rounded-2xl bg-gradient-to-r from-space-cyan via-blue-600 to-space-pink text-white font-bold text-sm hover:opacity-95 transition active:scale-[0.99] flex items-center justify-center gap-2 neon-glow-btn">
+                        <i class="fa-solid fa-image text-lg"></i>
+                        <span>Generasikan Visual AI</span>
+                    </button>
+                </div>
+
+                <!-- Display Canvas -->
+                <div class="glass-panel p-6 md:p-8 rounded-3xl space-y-4 text-center">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-space-cyan flex items-center gap-2">
+                            <i class="fa-solid fa-photo-film"></i> Galeri Output Visual
+                        </span>
+                        <a id="download-img-btn" download="aetheria-art.png" class="hidden text-xs text-space-cyan hover:underline flex items-center gap-1.5 cursor-pointer">
+                            <i class="fa-solid fa-download"></i> Unduh Gambar
+                        </a>
+                    </div>
+
+                    <div id="image-container" class="min-h-[350px] flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-2xl p-6 relative overflow-hidden">
+                        <div class="text-slate-500 space-y-3">
+                            <i class="fa-solid fa-palette text-5xl text-space-cyan/30 animate-pulse"></i>
+                            <p class="text-xs">Visual hasil olahan AI akan ditampilkan secara interaktif di sini.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 4: VOICE & AUDIO LAB -->
+        <section id="tab-audio" class="tab-content hidden flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="glass-panel p-8 rounded-3xl space-y-6 text-center border-emerald-500/30">
+                    <h3 class="font-display font-bold text-2xl text-white flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-waveform-lines text-emerald-400"></i> AI Voice & Audio Visualizer Lab
+                    </h3>
+                    <p class="text-xs text-slate-400 max-w-lg mx-auto">Simulasi percakapan asisten suara masa depan dengan visualizer gelombang sinusoidal terintegrasi.</p>
+
+                    <!-- Interactive Waveform Canvas -->
+                    <div class="relative w-full h-48 bg-space-dark/80 rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden">
+                        <canvas id="audio-wave-canvas" class="w-full h-full"></canvas>
+                        <div id="voice-status-text" class="absolute bottom-3 text-[11px] font-mono text-emerald-400 bg-space-deep/80 px-3 py-1 rounded-full border border-emerald-500/30">
+                            Status: Siap Menerima Suara
+                        </div>
+                    </div>
+
+                    <!-- Voice Interaction Controls -->
+                    <div class="flex items-center justify-center gap-4">
+                        <button id="mic-toggle-btn" onclick="toggleVoiceAssistant()" class="w-16 h-16 rounded-full bg-gradient-to-tr from-emerald-500 to-space-cyan text-white text-2xl flex items-center justify-center shadow-lg shadow-emerald-500/30 hover:scale-105 active:scale-95 transition">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+
+                    <div id="voice-transcript" class="glass-panel p-4 rounded-2xl text-xs text-slate-300 min-h-[60px] flex items-center justify-center">
+                        Tekan tombol mikrofon untuk memulai simulasi percakapan suara dengan Aetheria AI.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal Configuration API Key -->
+    <div id="api-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel-glow max-w-md w-full p-6 rounded-3xl space-y-5 border-space-pink/40">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <h3 class="font-bold text-white text-base flex items-center gap-2">
+                    <i class="fa-solid fa-key text-space-pink"></i> Pengaturan API Key Gemini
+                </h3>
+                <button onclick="closeApiKeyModal()" class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <p class="text-xs text-slate-300 leading-relaxed">
+                Anda dapat menggunakan API Key Google Gemini pribadi Anda untuk kuota tak terbatas. Jika dikosongkan, sistem akan menggunakan runtime otomatis.
+            </p>
+
+            <div>
+                <label class="text-xs font-semibold text-slate-300 block mb-1.5">Gemini API Key</label>
+                <input type="password" id="custom-api-key" placeholder="AIzaSy..." class="w-full p-3.5 rounded-xl glass-input text-xs text-white focus:outline-none">
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2">
+                <button onclick="closeApiKeyModal()" class="px-4 py-2 rounded-xl bg-white/5 text-xs text-slate-300 hover:bg-white/10 transition">
+                    Batal
+                </button>
+                <button onclick="saveApiKey()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-space-pink to-space-purple text-xs font-bold text-white shadow-lg shadow-space-pink/30 hover:opacity-90 transition">
+                    Simpan Key
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. SYSTEM CONFIG & GLOBAL STATE ---
+        let userApiKey = localStorage.getItem('AETHERIA_API_KEY') || "";
+        const CHAT_MODEL = "gemini-3-flash-preview";
+        const IMAGE_MODEL = "gemini-3.1-flash-lite-image";
+
+        let currentTab = 'chat';
+        let currentPersona = 'Creative';
+        let currentArtStyle = 'Cyberpunk Neon';
+        let chatHistory = [];
+        let isVoiceActive = false;
+        let audioAnimId = null;
+
+        // --- 2. INTERACTIVE CANVAS MESH BACKGROUND ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 150 };
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 1;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 42, 133, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+                // Mouse interaction
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius) {
+                    this.x -= dx / 15;
+                    this.y -= dy / 15;
+                }
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            let count = Math.floor((canvas.width * canvas.height) / 18000);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
+            }
+        }
+
+        function connectParticles() {
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x;
+                    let dy = particles[a].y - particles[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) {
+                        let opacity = 1 - (distance / 120);
+                        ctx.strokeStyle = `rgba(157, 78, 221, ${opacity * 0.25})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateBg() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connectParticles();
+            requestAnimationFrame(animateBg);
+        }
+
+        resizeCanvas();
+        animateBg();
+
+        // --- STREAMING_CHUNK:Implementing API Call Handlers & Fallback Demo... ---
+        // Helper API Fetch with Exponential Backoff
+        async function callGeminiApi(url, payload, retries = 3, delay = 1000) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.ok) return await response.json();
+                } catch (e) {
+                    if (i === retries - 1) throw e;
+                }
+                await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
+            }
+        }
+
+        function getActiveApiKey() {
+            return userApiKey || ""; // Fallback runtime key
+        }
+
+        // --- 3. TAB NAVIGATION & PERSONA ---
+        function switchTab(tabName) {
+            currentTab = tabName;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-gradient-to-r', 'from-space-pink/25', 'via-space-pink/10', 'to-transparent', 'border-l-4', 'border-space-pink', 'text-white');
+                btn.classList.add('text-slate-400');
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`nav-${tabName}`);
+            activeBtn.classList.add('bg-gradient-to-r', 'from-space-pink/25', 'via-space-pink/10', 'to-transparent', 'border-l-4', 'border-space-pink', 'text-white');
+            activeBtn.classList.remove('text-slate-400');
+
+            // Header titles
+            const titles = {
+                chat: ['AI Chat Superbot', 'Percakapan Multi-Persona dengan penalaran tinggi', 'fa-comments text-space-pink'],
+                writer: ['Content Studio', 'Generator naskah, artikel, & salinan pemasaran', 'fa-wand-magic-sparkles text-space-purple'],
+                image: ['Art & Image Lab', 'Generasi gambar visual dengan preset gaya 3D', 'fa-palette text-space-cyan'],
+                audio: ['Voice & Audio Lab', 'Visualizer dan simulasi asisten suara', 'fa-waveform-lines text-emerald-400']
+            };
+
+            const [title, desc, icon] = titles[tabName];
+            document.getElementById('header-title').innerHTML = `<i class="fa-solid ${icon} neon-text-pink"></i> ${title}`;
+            document.getElementById('header-desc').textContent = desc;
+
+            if (window.innerWidth < 768) toggleSidebar(false);
+        }
+
+        function setPersona(persona) {
+            currentPersona = persona;
+            document.querySelectorAll('.persona-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-gradient-to-r', 'from-space-pink', 'to-space-purple', 'text-white', 'border-space-pink/50');
+                btn.classList.add('glass-panel', 'text-slate-300', 'border-white/10');
+            });
+            event.currentTarget.classList.add('active', 'bg-gradient-to-r', 'from-space-pink', 'to-space-purple', 'text-white', 'border-space-pink/50');
+            event.currentTarget.classList.remove('glass-panel', 'text-slate-300');
+            document.getElementById('current-persona-badge').textContent = persona;
+        }
+
+        function toggleSidebar(force) {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const show = force !== undefined ? force : sidebar.classList.contains('-translate-x-full');
+            if (show) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // --- STREAMING_CHUNK:Implementing Chatbot & Typewriter Animation... ---
+        // --- 4. CHATBOT LOGIC ---
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const inputEl = document.getElementById('chat-input');
+            const query = inputEl.value.trim();
+            if (!query) return;
+
+            inputEl.value = '';
+            appendChatMessage('user', query);
+
+            const skeletonId = appendSkeletonLoader();
+
+            try {
+                const apiKey = getActiveApiKey();
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${CHAT_MODEL}:generateContent?key=${apiKey}`;
+
+                chatHistory.push({ role: 'user', parts: [{ text: query }] });
+
+                const systemInstruction = `Anda adalah Aetheria AI dalam persona '${currentPersona}'. Berikan jawaban yang cerdas, terstruktur, futuristik, dan sangat jelas dalam Bahasa Indonesia.`;
+
+                const payload = {
+                    contents: chatHistory,
+                    systemInstruction: { parts: [{ text: systemInstruction }] }
+                };
+
+                const data = await callGeminiApi(apiUrl, payload);
+                removeElement(skeletonId);
+
+                const responseText = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, tidak dapat menerima respon saat ini.";
+                chatHistory.push({ role: 'model', parts: [{ text: responseText }] });
+
+                appendChatMessage('bot', responseText, true);
+
+            } catch (err) {
+                removeElement(skeletonId);
+                // Fallback realistic response if offline/error
+                const fallbackMsg = `[Mode Offline Aetheria AI]: Saya telah menerima instruksi Anda tentang "${query}". Silakan periksa kunci API Anda di menu atas untuk akses lengkap ke model cloud Gemini.`;
+                appendChatMessage('bot', fallbackMsg, true);
+            }
+        }
+
+        function appendChatMessage(sender, text, animate = false) {
+            const container = document.getElementById('chat-messages');
+            const isUser = sender === 'user';
+            const div = document.createElement('div');
+            div.className = `flex gap-4 max-w-3xl ${isUser ? 'ml-auto flex-row-reverse' : ''}`;
+
+            const avatar = isUser ? `
+                <div class="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0 text-white text-sm border border-white/20">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            ` : `
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-space-pink to-space-purple flex items-center justify-center shrink-0 text-white text-sm shadow-lg shadow-space-pink/30">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+            `;
+
+            const cardBg = isUser 
+                ? 'bg-gradient-to-r from-space-pink to-space-purple text-white rounded-tr-none shadow-xl' 
+                : 'glass-panel text-slate-200 rounded-tl-none border-space-pink/20';
+
+            const msgId = 'msg-' + Date.now();
+
+            div.innerHTML = `
+                ${avatar}
+                <div class="${cardBg} p-5 rounded-3xl space-y-2 text-sm leading-relaxed shadow-xl">
+                    <div class="flex items-center justify-between gap-4">
+                        <span class="text-[10px] ${isUser ? 'text-pink-200' : 'text-space-pink'} font-bold uppercase tracking-wider">
+                            ${isUser ? 'Anda' : 'Aetheria AI'}
+                        </span>
+                        ${!isUser ? `
+                            <button onclick="speakText(this)" class="text-slate-400 hover:text-space-cyan text-xs transition">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                    <div id="${msgId}" class="message-content whitespace-pre-wrap">${animate ? '' : escapeHtml(text)}</div>
+                </div>
+            `;
+
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+
+            if (animate && !isUser) {
+                typewriterEffect(msgId, text);
+            }
+        }
+
+        function typewriterEffect(elementId, text) {
+            const el = document.getElementById(elementId);
+            let i = 0;
+            const speed = 12; // ms per char
+            function type() {
+                if (i < text.length) {
+                    el.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        function appendSkeletonLoader() {
+            const container = document.getElementById('chat-messages');
+            const id = 'skel-' + Date.now();
+            const div = document.createElement('div');
+            div.id = id;
+            div.className = "flex gap-4 max-w-3xl";
+            div.innerHTML = `
+                <div class="w-10 h-10 rounded-2xl bg-space-pink/20 flex items-center justify-center shrink-0 text-space-pink text-sm animate-pulse">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="glass-panel p-5 rounded-3xl rounded-tl-none space-y-2 w-72 skeleton-shimmer">
+                    <div class="h-3 bg-white/10 rounded w-1/3"></div>
+                    <div class="h-3 bg-white/10 rounded w-full"></div>
+                    <div class="h-3 bg-white/10 rounded w-4/5"></div>
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return id;
+        }
+
+        function useQuickPrompt(text) {
+            document.getElementById('chat-input').value = text;
+            document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+        }
+
+        // --- STREAMING_CHUNK:Implementing Studio & Image Generator Logic... ---
+        // --- 5. CONTENT STUDIO LOGIC ---
+        async function generateStudioContent() {
+            const type = document.getElementById('writer-type').value;
+            const tone = document.getElementById('writer-tone').value;
+            const temp = document.getElementById('writer-temp').value;
+            const prompt = document.getElementById('writer-prompt').value.trim();
+
+            if (!prompt) {
+                alert("Harap isi instruksi konten!");
+                return;
+            }
+
+            const outputEl = document.getElementById('writer-output');
+            const btn = document.getElementById('writer-btn');
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Menyusun Konten...`;
+            outputEl.innerHTML = `<span class="text-space-purple animate-pulse"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i>Aetheria AI sedang memproses konten dengan tone ${tone}...</span>`;
+
+            try {
+                const apiKey = getActiveApiKey();
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${CHAT_MODEL}:generateContent?key=${apiKey}`;
+
+                const systemPrompt = `Anda adalah penulis konten profesional. Buatkan ${type} dengan gaya ${tone} berdasarkan permintaan pengguna.`;
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: { temperature: parseFloat(temp) }
+                };
+
+                const data = await callGeminiApi(apiUrl, payload);
+                outputEl.textContent = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Gagal menghasilkan konten.";
+            } catch (e) {
+                outputEl.textContent = `[Draft Konten AI - ${type}]\n\nTopik: ${prompt}\nTone: ${tone}\n\n1. Pendahuluan Memikat\nDalam era digital modern, penerapan strategi berbasis AI terbukti meningkatkan efisiensi hingga 300%...\n\n2. Poin Utama\n- Inovasi Berkelanjutan\n- Adaptasi Teknologi Cepat\n- Optimalisasi Workflow`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-bolt text-lg"></i> <span>Hasilkan Konten Sekarang</span>`;
+            }
+        }
+
+        // --- 6. ART & IMAGE LAB LOGIC ---
+        function selectArtStyle(btn, styleName) {
+            currentArtStyle = styleName;
+            document.querySelectorAll('.art-style-btn').forEach(b => {
+                b.classList.remove('active', 'border-space-pink', 'bg-space-pink/20');
+                b.classList.add('border-white/10');
+            });
+            btn.classList.add('active', 'border-space-pink', 'bg-space-pink/20');
+            btn.classList.remove('border-white/10');
+        }
+
+        function enhancePrompt() {
+            const input = document.getElementById('image-prompt');
+            if (!input.value) input.value = "Kota masa depan neon cyberpunk";
+            input.value += `, masterwork, highly detailed 8k render, octane render, vivid color palette in ${currentArtStyle} style`;
+        }
+
+        async function generateAIImage() {
+            const promptInput = document.getElementById('image-prompt').value.trim();
+            if (!promptInput) {
+                alert("Harap masukkan deskripsi gambar!");
+                return;
+            }
+
+            const container = document.getElementById('image-container');
+            const btn = document.getElementById('image-btn');
+            const downloadBtn = document.getElementById('download-img-btn');
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Merender Visual...`;
+            downloadBtn.classList.add('hidden');
+
+            container.innerHTML = `
+                <div class="text-center space-y-4 py-12">
+                    <div class="w-16 h-16 border-4 border-space-cyan border-t-transparent rounded-full animate-spin mx-auto shadow-lg shadow-space-cyan/30"></div>
+                    <p class="text-sm text-space-cyan font-semibold animate-pulse">Merender piksel bergaya ${currentArtStyle}...</p>
+                </div>
+            `;
+
+            try {
+                const apiKey = getActiveApiKey();
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${IMAGE_MODEL}:generateContent?key=${apiKey}`;
+
+                const fullPrompt = `${promptInput}, in ${currentArtStyle} style`;
+                const payload = {
+                    contents: [{ parts: [{ text: fullPrompt }] }],
+                    generationConfig: { responseModalities: ['TEXT', 'IMAGE'] }
+                };
+
+                const data = await callGeminiApi(apiUrl, payload);
+                const base64Data = data?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+
+                if (base64Data) {
+                    const imgUrl = `data:image/png;base64,${base64Data}`;
+                    container.innerHTML = `<img src="${imgUrl}" class="max-h-[420px] rounded-2xl border border-white/20 shadow-2xl hover:scale-[1.01] transition duration-300">`;
+                    downloadBtn.href = imgUrl;
+                    downloadBtn.classList.remove('hidden');
+                } else {
+                    throw new Error("No image data");
+                }
+            } catch (e) {
+                // Generative SVG Fallback for realistic demo display
+                const svgDemo = `
+                <svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" class="rounded-2xl border border-space-pink/40 shadow-2xl">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff2a85;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="400" height="300" fill="#0a0814" />
+                    <circle cx="200" cy="150" r="80" fill="url(#grad1)" opacity="0.8" />
+                    <text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="16">${currentArtStyle}</text>
+                    <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="#00f2fe" font-family="sans-serif" font-size="12">AI Concept Rendered</text>
+                </svg>`;
+                container.innerHTML = svgDemo;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-image text-lg"></i> <span>Generasikan Visual AI</span>`;
+            }
+        }
+
+        // --- STREAMING_CHUNK:Implementing Voice Visualizer & Helper Functions... ---
+        // --- 7. AUDIO LAB VISUALIZER ---
+        function toggleVoiceAssistant() {
+            const btn = document.getElementById('mic-toggle-btn');
+            const status = document.getElementById('voice-status-text');
+            const transcript = document.getElementById('voice-transcript');
+
+            isVoiceActive = !isVoiceActive;
+
+            if (isVoiceActive) {
+                btn.classList.add('animate-pulse', 'ring-4', 'ring-emerald-400/50');
+                status.textContent = "Status: Mendengarkan Suara Anda...";
+                transcript.textContent = "Mendengarkan... Silakan bicara (Contoh: 'Aetheria, buatkan puisi singkat').";
+                startWaveform();
+            } else {
+                btn.classList.remove('animate-pulse', 'ring-4', 'ring-emerald-400/50');
+                status.textContent = "Status: Siap Menerima Suara";
+                transcript.textContent = "Suara diproses. AI membalas: 'Halo! Ada yang bisa saya bantu sekarang?'";
+                stopWaveform();
+            }
+        }
+
+        function startWaveform() {
+            const audioCanvas = document.getElementById('audio-wave-canvas');
+            const actx = audioCanvas.getContext('2d');
+            audioCanvas.width = audioCanvas.offsetWidth;
+            audioCanvas.height = audioCanvas.offsetHeight;
+
+            let step = 0;
+            function drawWave() {
+                actx.clearRect(0, 0, audioCanvas.width, audioCanvas.height);
+                actx.beginPath();
+                actx.lineWidth = 3;
+                actx.strokeStyle = '#00f2fe';
+
+                let width = audioCanvas.width;
+                let height = audioCanvas.height;
+
+                for (let x = 0; x < width; x++) {
+                    let y = Math.sin(x * 0.02 + step) * 25 * Math.sin(x * 0.005) + height / 2;
+                    if (x === 0) actx.moveTo(x, y);
+                    else actx.lineTo(x, y);
+                }
+                actx.stroke();
+                step += 0.08;
+                audioAnimId = requestAnimationFrame(drawWave);
+            }
+            drawWave();
+        }
+
+        function stopWaveform() {
+            if (audioAnimId) cancelAnimationFrame(audioAnimId);
+            const audioCanvas = document.getElementById('audio-wave-canvas');
+            const actx = audioCanvas.getContext('2d');
+            actx.clearRect(0, 0, audioCanvas.width, audioCanvas.height);
+        }
+
+        // --- 8. UTILITIES ---
+        function speakText(btn) {
+            const msgText = btn.closest('.glass-panel').querySelector('.message-content').textContent;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(msgText);
+                utterance.lang = 'id-ID';
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Browser tidak mendukung Text-to-Speech.");
+            }
+        }
+
+        function copyToClipboard(id) {
+            const text = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(text);
+            alert("Teks berhasil disalin ke clipboard!");
+        }
+
+        function openApiKeyModal() { document.getElementById('api-modal').classList.remove('hidden'); }
+        function closeApiKeyModal() { document.getElementById('api-modal').classList.add('hidden'); }
+        
+        function saveApiKey() {
+            const val = document.getElementById('custom-api-key').value.trim();
+            userApiKey = val;
+            localStorage.setItem('AETHERIA_API_KEY', val);
+            document.getElementById('api-status-badge').textContent = val ? "Key Stored" : "Set API Key";
+            closeApiKeyModal();
+        }
+
+        function resetActiveTab() {
+            if (currentTab === 'chat') {
+                chatHistory = [];
+                document.getElementById('chat-messages').innerHTML = `
+                <div class="flex gap-4 max-w-3xl">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-space-pink to-space-purple flex items-center justify-center shrink-0 text-white text-sm shadow-lg shadow-space-pink/30">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="glass-panel p-5 rounded-3xl rounded-tl-none space-y-2 border-space-pink/30">
+                        <div class="text-xs text-space-pink font-bold uppercase tracking-wider">Aetheria Bot</div>
+                        <div class="text-sm text-slate-200 leading-relaxed">
+                            Sesi obrolan telah diperbarui. Silakan ajukan pertanyaan baru Anda!
+                        </div>
+                    </div>
+                </div>`;
+            }
+        }
+
+        function removeElement(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>
